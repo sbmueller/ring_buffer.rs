@@ -4,6 +4,12 @@ pub struct RingBuffer<T: Sized + Default + Copy, const CAPACITY: usize> {
     end_index: usize,
 }
 
+impl<T: Sized + Default + Copy, const CAPACITY: usize> Default for RingBuffer<T, CAPACITY> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T: Sized + Default + Copy, const CAPACITY: usize> RingBuffer<T, CAPACITY> {
     pub fn new() -> Self {
         RingBuffer {
@@ -37,7 +43,7 @@ impl<T: Sized + Default + Copy, const CAPACITY: usize> RingBuffer<T, CAPACITY> {
         }
         let return_value = self.data[(self.end_index + CAPACITY - self.size) % CAPACITY];
         self.size -= 1;
-        return Some(return_value);
+        Some(return_value)
     }
 }
 
